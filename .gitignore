@@ -1,0 +1,34 @@
+# ルートの node_modules（基本使わない）
+node_modules/
+
+# 各アプリの依存やビルドファイル
+apps/*/node_modules/
+apps/*/dist/
+apps/*/.next/      # Next.js使う場合
+apps/*/.turbo/
+
+# バッチで使うキャッシュや一時データ
+apps/batch/data/
+apps/batch/.cache/
+
+# 共有パッケージのビルド
+packages/*/node_modules/
+packages/*/dist/
+
+# TypeScript
+**/*.tsbuildinfo
+
+# 環境変数
+**/.env
+.env
+
+# SAMアーティファクト
+infra/.aws-sam/
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+
+# Logs
+*.log
