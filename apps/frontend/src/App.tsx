@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <div>
-        駅合わせV1
+        駅合わせV2
       </div>
     </>
   )
