@@ -7,8 +7,29 @@ import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
 import DefaultLayout from "@/layouts/default";
+import { Button } from "@heroui/button";
 
 export default function IndexPage() {
+
+  const callApi = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/suggest-midpoint', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors'  // 明示的にCORSを指定
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const result = await response.json();
+      console.log(result)
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+
   return (
     <DefaultLayout>
       <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
@@ -55,6 +76,12 @@ export default function IndexPage() {
           </Snippet>
         </div>
       </section>
+      <Button
+        onPress={() => {
+          callApi()
+        }}
+        color="primary"
+      >APIをテストコール</Button>
     </DefaultLayout>
   );
 }

@@ -1,0 +1,26 @@
+Resources:
+  ApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: "MyApi"
+      StageName: "dev"
+      Cors:
+        AllowOrigin: "'*'"  # 任意のオリジンを許可
+        AllowCredentials: true
+        AllowMethods: "'GET,POST,PUT,DELETE'"
+        AllowHeaders: "'Content-Type,Authorization'"
+
+  ApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: handler.handler
+      Runtime: nodejs18.x  
+      CodeUri: ../../apps/api/dist
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /suggest-midpoint
+            Method: get
+            RestApiId:
+              Ref: ApiGateway  # ここでAPI Gatewayリソースを参照
