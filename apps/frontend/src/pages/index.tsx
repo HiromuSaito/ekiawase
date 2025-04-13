@@ -1,5 +1,6 @@
 import DefaultLayout from "@/layouts/default";
-import { Button, ButtonGroup } from "@heroui/button";
+import { Button } from "@heroui/button";
+import SearchForm from "../components/SearchForm";
 
 export default function IndexPage() {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -26,11 +27,7 @@ export default function IndexPage() {
 
   return (
     <DefaultLayout>
-      <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-        <Button color="primary">
-          検索
-        </Button>
-      </section>
+      <SearchForm />
     </DefaultLayout>
   );
 }
