@@ -14,6 +14,7 @@ export default function IndexPage() {
 
   const callApi = async () => {
     try {
+      console.log('APIURL=', API_URL)
       const response = await fetch(`${API_URL}/suggest-midpoint`, {
         method: 'GET',
         headers: {
