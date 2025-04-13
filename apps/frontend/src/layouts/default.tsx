@@ -1,6 +1,5 @@
 import Header from "../components/Header";
 
-
 export default function DefaultLayout({
   children,
 }: {
@@ -9,9 +8,7 @@ export default function DefaultLayout({
   return (
     <div className="px-6 py-4">
       <Header />
-      <main>
-        {children}
-      </main>
+      <main>{children}</main>
     </div>
   );
 }
