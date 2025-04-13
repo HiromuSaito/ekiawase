@@ -6,9 +6,9 @@ export default function DefaultLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="px-6 py-4">
+    <div >
       <Header />
-      <main>{children}</main>
+      <main className="px-6 py-4">{children}</main>
     </div>
   );
 }

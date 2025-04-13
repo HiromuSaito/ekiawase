@@ -1,8 +1,8 @@
 import { Fragment, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { Button } from "@heroui/button";
-import { Input } from "@heroui/input";
 import { Trash2 } from "lucide-react";
+import { Combobox } from "./Combobox";
 
 type FormValues = {
   stations: { name: string }[];
@@ -12,7 +12,7 @@ type Props = {
 };
 export default function SearchForm({ search }: Props) {
   const [isLoading, setIsLoading] = useState(false);
-  const { control, register, handleSubmit } = useForm<FormValues>({
+  const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: { stations: [{ name: "" }, { name: "" }] },
   });
   const { fields, append, remove } = useFieldArray({
@@ -38,12 +38,13 @@ export default function SearchForm({ search }: Props) {
                   <p className="text-xs mb-1">
                     出発駅{index + 1}
                   </p>
-                  <Input
+                  {/* <Input
                     {...register(`stations.${index}.name`, { required: true })}
                     className=" rounded"
                     placeholder={`駅 ${index + 1}`}
                     size="sm"
-                  />
+                  /> */}
+                  <Combobox />
                 </div>
 
                 {fields.length > 2 && (
