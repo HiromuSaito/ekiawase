@@ -1,12 +1,14 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
 Resources:
   ApiGateway:
     Type: AWS::Serverless::Api
     Properties:
-      Name: "MyApi"
+      Name: "EkiawaseApi"
       StageName: "dev"
       Cors:
         AllowOrigin: "'*'"  # 任意のオリジンを許可
-        AllowCredentials: true
         AllowMethods: "'GET,POST,PUT,DELETE'"
         AllowHeaders: "'Content-Type,Authorization'"
 
@@ -24,3 +26,9 @@ Resources:
             Method: get
             RestApiId:
               Ref: ApiGateway  # ここでAPI Gatewayリソースを参照
+Outputs:
+  ApiUrl:
+    Description: "API Gateway endpoint URL"
+    Value: !Sub "https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/dev"
+    Export:
+      Name: EkiawaseApiUrl

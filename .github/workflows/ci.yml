@@ -25,6 +25,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Set .env.production
+        run: echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" > .env.production
+
       - name: Build frontend
         run: pnpm --filter frontend build
 

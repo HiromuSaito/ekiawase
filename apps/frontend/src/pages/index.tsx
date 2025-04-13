@@ -10,15 +10,16 @@ import DefaultLayout from "@/layouts/default";
 import { Button } from "@heroui/button";
 
 export default function IndexPage() {
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const callApi = async () => {
     try {
-      const response = await fetch('http://localhost:3000/suggest-midpoint', {
+      const response = await fetch(`${API_URL}/suggest-midpoint`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
-        mode: 'cors'  // 明示的にCORSを指定
+        mode: 'cors'
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');
