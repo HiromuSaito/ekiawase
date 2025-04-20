@@ -2,8 +2,10 @@ import { Fragment, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { Button } from "@heroui/react";
 import { Trash2 } from "lucide-react";
-import { StationCombobox } from "./StationCombobox";
+
 import { Station } from "../types";
+
+import { StationCombobox } from "./StationCombobox";
 
 type FormValues = {
   selectStations: (Station | null)[];
@@ -11,16 +13,19 @@ type FormValues = {
 
 type Props = {
   search: () => void;
-  stations: Station[]
+  stations: Station[];
 };
 export default function SearchForm({ search, stations }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const { control, handleSubmit, setValue, watch } = useForm<FormValues>({
     defaultValues: {
-      selectStations: [{ code: "", name: "", lon: "", lat: "" }, { code: "", name: "", lon: "", lat: "" }],
+      selectStations: [
+        { code: "", name: "", lon: "", lat: "" },
+        { code: "", name: "", lon: "", lat: "" },
+      ],
     },
   });
-  const { fields, append, remove, } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control,
     name: "selectStations",
   });
@@ -37,25 +42,22 @@ export default function SearchForm({ search, stations }: Props) {
       <div className="w-full">
         <form className="space-y-2 w-full" onSubmit={handleSubmit(onSubmit)}>
           {fields.map((field, index) => {
-            console.log("hoge")
             const selected = watch(`selectStations.${index}`) as Station | null;
+
             return (
               <Fragment key={field.id}>
                 <div className="flex items-end w-space-x-2 w-full">
                   <div className="flex flex-col w-full">
-                    <p className="text-xs mb-1">
-                      出発駅{index + 1}
-                    </p>
+                    <p className="text-xs mb-1">出発駅{index + 1}</p>
 
                     <StationCombobox
-                      stations={stations}
                       pageSize={10}
                       selectedItem={selected ?? undefined}
                       setSelectedItem={(item: Station | undefined) => {
-                        setValue(`selectStations.${index}`, item ?? null)
+                        setValue(`selectStations.${index}`, item ?? null);
                       }}
+                      stations={stations}
                     />
-
                   </div>
 
                   {fields.length > 2 && (
@@ -69,7 +71,7 @@ export default function SearchForm({ search, stations }: Props) {
                   )}
                 </div>
               </Fragment>
-            )
+            );
           })}
           <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
             <Button
@@ -83,7 +85,6 @@ export default function SearchForm({ search, stations }: Props) {
               出発駅を追加
             </Button>
             <Button
-              className="text-white"
               color="primary"
               isLoading={isLoading}
               size="sm"

@@ -9,7 +9,7 @@ import {
 } from "@heroui/react";
 
 type Props = {};
-export default function SearchResults({ }: Props) {
+export default function SearchResults({}: Props) {
   return (
     <div className="w-full max-w-lg my-4">
       <p className="font-bold">検索結果</p>

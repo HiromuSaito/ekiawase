@@ -2,11 +2,10 @@ import { useState } from "react";
 
 import SearchForm from "../components/SearchForm";
 import SearchResults from "../components/SearchResults";
+import orginalStations from "../constants/stations.json";
+import { Station } from "../types";
 
 import DefaultLayout from "@/layouts/default";
-
-import orginalStations from "../constants/stations.json"
-import { Station } from "../types";
 
 export default function IndexPage() {
   const stations: Station[] = orginalStations;
@@ -15,9 +14,7 @@ export default function IndexPage() {
   return (
     <DefaultLayout>
       {!isSearched ? (
-        <SearchForm
-          stations={stations}
-          search={() => setIsSearched(true)} />
+        <SearchForm search={() => setIsSearched(true)} stations={stations} />
       ) : (
         <SearchResults />
       )}
