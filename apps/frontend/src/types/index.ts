@@ -1,5 +1,12 @@
-import { SVGProps } from "react";
+export type Station = {
+  code: string
+  name: string
+  lon: string
+  lat: string
+}
 
-export type IconSvgProps = SVGProps<SVGSVGElement> & {
-  size?: number;
-};
+export type SelectItem = {
+  id: string,
+  label: string,
+  description?: string,
+}
