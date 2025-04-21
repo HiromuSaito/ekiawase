@@ -2,8 +2,10 @@ import { Fragment, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { Button } from "@heroui/react";
 import { Trash2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import { Station } from "../types";
+import stations from "../constants/stations.json";
 
 import { StationCombobox } from "./StationCombobox";
 
@@ -11,12 +13,9 @@ type FormValues = {
   selectStations: (Station | null)[];
 };
 
-type Props = {
-  search: () => void;
-  stations: Station[];
-};
-export default function SearchForm({ search, stations }: Props) {
+export default function SearchForm() {
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const { control, handleSubmit, setValue, watch } = useForm<FormValues>({
     defaultValues: {
       selectStations: [
@@ -32,8 +31,18 @@ export default function SearchForm({ search, stations }: Props) {
 
   const onSubmit = (_data: FormValues) => {
     setIsLoading(true);
+    const codes = _data.selectStations
+      .filter((s) => s != null)
+      .map((s) => s.code)
+      .filter((code) => code);
+    const params = new URLSearchParams();
+
+    codes.forEach((code) => {
+      params.append("codes", code);
+    });
+
     setTimeout(() => {
-      search();
+      navigate(`/result?${params.toString()}`);
     }, 1000);
   };
 
