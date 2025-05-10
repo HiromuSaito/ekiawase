@@ -9,24 +9,26 @@ import {
   Spinner,
 } from "@heroui/react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
 
 import orginalStations from "../constants/stations.json";
 import { Station } from "../types";
-import { useEffect, useMemo, useState } from "react";
 import { findNearestStationsToMidpoint } from "../utils/findNearestStationsToMidpoint";
 
 type Props = {};
-export default function SearchResults({ }: Props) {
+export default function SearchResults({}: Props) {
   const [results, setResults] = useState<Station[]>([]);
 
   const navigate = useNavigate();
   const useQuery = () => {
     const location = useLocation();
+
     return location.search;
   };
   const search = useQuery();
   const codes = useMemo(() => {
     const params = new URLSearchParams(search);
+
     return params.getAll("codes");
   }, [search]);
 
@@ -35,13 +37,16 @@ export default function SearchResults({ }: Props) {
   ) as Station[];
 
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     if (codes.length < 2 || codes.length > 5) {
       navigate("/");
+
       return;
     }
 
     const stations = findNearestStationsToMidpoint(codes, orginalStations);
+
     setResults(stations);
     setIsLoading(false);
   }, [codes, navigate]);
@@ -58,43 +63,40 @@ export default function SearchResults({ }: Props) {
           </span>
         </div>
       </div>
-      {
-        isLoading ? (
-          <div className="flex justify-center items-center h-40">
-            <Spinner />
+      {isLoading ? (
+        <div className="flex justify-center items-center h-40">
+          <Spinner />
+        </div>
+      ) : (
+        <>
+          <Table aria-label="Example static collection table">
+            <TableHeader>
+              <TableColumn>駅名</TableColumn>
+              <TableColumn>路線</TableColumn>
+            </TableHeader>
+            <TableBody>
+              <>
+                {results.map((r) => (
+                  <TableRow key={r.code}>
+                    <TableCell>{r.name}</TableCell>
+                    <TableCell>{r.lines.join(", ")}</TableCell>
+                  </TableRow>
+                ))}
+              </>
+            </TableBody>
+          </Table>
+          <div className="mt-4">
+            <Button
+              color="default"
+              size="sm"
+              variant="bordered"
+              onPress={() => navigate("/")}
+            >
+              入力画面に戻る
+            </Button>
           </div>
-        ) : (
-          <>
-            <Table aria-label="Example static collection table">
-              <TableHeader>
-                <TableColumn>駅名</TableColumn>
-                <TableColumn>路線</TableColumn>
-              </TableHeader>
-              <TableBody>
-                <>
-                  {results.map(r => (
-                    <TableRow key={r.code}>
-                      <TableCell>{r.name}</TableCell>
-                      <TableCell>{r.lines.join(", ")}</TableCell>
-                    </TableRow>
-                  ))}
-                </>
-              </TableBody>
-            </Table>
-            <div className="mt-4">
-              <Button
-                color="default"
-                size="sm"
-                variant="bordered"
-                onPress={() => navigate("/")}
-              >
-                入力画面に戻る
-              </Button>
-            </div>
-          </>
-        )
-      }
-
-    </div >
+        </>
+      )}
+    </div>
   );
 }
