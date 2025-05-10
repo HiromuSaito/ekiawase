@@ -1,8 +1,9 @@
 export type Station = {
   code: string;
   name: string;
-  lon: string;
-  lat: string;
+  lon: number;
+  lat: number;
+  lines: string[];
 };
 
 export type SelectItem = {

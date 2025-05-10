@@ -19,8 +19,8 @@ export default function SearchForm() {
   const { control, handleSubmit, setValue, watch } = useForm<FormValues>({
     defaultValues: {
       selectStations: [
-        { code: "", name: "", lon: "", lat: "" },
-        { code: "", name: "", lon: "", lat: "" },
+        { code: "", name: "", lon: 0, lat: 0 },
+        { code: "", name: "", lon: 0, lat: 0 },
       ],
     },
   });
